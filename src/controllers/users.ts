@@ -34,19 +34,26 @@ export default {
     }
   },
 
-  getUserByIdHandler: (request:Hapi.Request, h:Hapi.ResponseToolkit) => {
+  getUserByIdHandler: async (
+    request:Hapi.Request,
+    h:Hapi.ResponseToolkit,
+  ) => {
     const { prisma } = request.server.app;
     const { userId } = request.params;
+    console.log('hello');
     try {
-      const existingUser = prisma.user.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: {
           id: parseInt(userId, 10),
         },
       });
-      h.response({ user: existingUser }).code(200);
+      if (!existingUser) {
+        throw new Error("User doesn't exist");
+      }
+      return h.response({ user: existingUser }).code(200);
     } catch (error) {
       console.error(error);
-      return boom.badImplementation('Error while creating the user');
+      return boom.notFound('User does   nt exist');
     }
   },
 };
