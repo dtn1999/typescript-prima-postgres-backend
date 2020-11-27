@@ -34,8 +34,12 @@
     "@hapi/hapi": "^20.0.3",
     "@hapi/joi": "^17.1.1",
     "@prisma/client": "^2.12.1",
+    "@sendgrid/mail": "^7.4.0",
     "@types/hapi__hapi": "^20.0.2",
     "@types/hapi__joi": "^17.1.6",
-    "date-fns": "^2.16.1"
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "hapi-auth-jwt2": "^10.2.0",
+    "jsonwebtoken": "^8.5.1"
   }
 }
