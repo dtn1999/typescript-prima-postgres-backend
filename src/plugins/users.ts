@@ -38,6 +38,19 @@ const usersPlugin:Hapi.Plugin<undefined> = {
           },
         },
       },
+      {
+        method: 'DELETE',
+        path: '/api/users/{userId}',
+        handler: usersContoller.deletUserByIdHandler,
+        options: {
+          validate: {
+            params: undefined,
+            failAction: (request, h, error) => {
+              throw error;
+            },
+          },
+        },
+      },
     ]);
   },
 };

@@ -40,7 +40,6 @@ export default {
   ) => {
     const { prisma } = request.server.app;
     const { userId } = request.params;
-    console.log('hello');
     try {
       const existingUser = await prisma.user.findUnique({
         where: {
@@ -53,7 +52,28 @@ export default {
       return h.response({ user: existingUser }).code(200);
     } catch (error) {
       console.error(error);
-      return boom.notFound('User does   nt exist');
+      return boom.notFound(error.message || 'User does   nt exist');
+    }
+  },
+
+  deletUserByIdHandler: async (
+    request:Hapi.Request,
+    h:Hapi.ResponseToolkit,
+  ) => {
+    const { prisma } = request.server.app;
+    const { userId } = request.params;
+    console.log('hello');
+    try {
+      const deletedUser = await prisma.user.delete({
+        where: { id: parseInt(userId, 10) },
+      });
+      if (!deletedUser) {
+        throw new Error('No user with the given ID');
+      }
+      return h.response().code(204);
+    } catch (error) {
+      console.error(error);
+      return boom.notFound(error.message || 'User to deleted wasn\'t found');
     }
   },
 };
