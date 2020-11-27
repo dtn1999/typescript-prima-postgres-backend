@@ -3,6 +3,7 @@ import {
   statusPlugin,
   prismaPlugin,
   usersPlugin,
+  coursesPlugin,
 } from './plugins';
 
 export async function createServer():Promise<Hapi.Server> {
@@ -15,6 +16,7 @@ export async function createServer():Promise<Hapi.Server> {
     statusPlugin,
     prismaPlugin,
     usersPlugin,
+    coursesPlugin,
   ]);
   await server.initialize();
   return server;
