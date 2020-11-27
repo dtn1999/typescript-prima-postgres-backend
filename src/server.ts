@@ -1,5 +1,9 @@
 import Hapi from '@hapi/hapi';
-import { statusPlugin, prismaPlugin, usersPlugin } from './plugins';
+import {
+  statusPlugin,
+  prismaPlugin,
+  usersPlugin,
+} from './plugins';
 
 export async function createServer():Promise<Hapi.Server> {
   console.log('========== server is being created =================');
@@ -7,7 +11,11 @@ export async function createServer():Promise<Hapi.Server> {
     port: process.env.PORT || 3000,
     host: process.env.HOST || 'localhost',
   });
-  await server.register([statusPlugin, prismaPlugin, usersPlugin]);
+  await server.register([
+    statusPlugin,
+    prismaPlugin,
+    usersPlugin,
+  ]);
   await server.initialize();
   return server;
 }

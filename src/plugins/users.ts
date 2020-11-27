@@ -1,6 +1,6 @@
 import Hapi from '@hapi/hapi';
 // import Joi from '@hapi/joi';
-import usersContoller from '../controllers';
+import { usersContoller } from '../controllers';
 // import { createUserPayloadSchema } from '../validations';
 
 const usersPlugin:Hapi.Plugin<undefined> = {
