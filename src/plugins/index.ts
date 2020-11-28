@@ -1,11 +1,7 @@
-import statusPlugin from './status';
-import prismaPlugin from './prisma';
-import usersPlugin from './users';
-import coursesPlugin from './courses';
+import apiStatusPlugin from './api-status';
+import usersPlugin from './user';
 
 export {
-  statusPlugin,
-  prismaPlugin,
+  apiStatusPlugin,
   usersPlugin,
-  coursesPlugin,
 };

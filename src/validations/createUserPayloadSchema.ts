@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
-import { UserInput } from '../controllers/users';
+import { TUser } from '../models';
 
-export default Joi.object<UserInput>().keys({
+export default Joi.object<TUser>().keys({
   lastName: Joi.string().required(),
   firstName: Joi.string().required(),
   email: Joi.string().email().required(),

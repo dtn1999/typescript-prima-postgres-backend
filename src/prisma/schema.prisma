@@ -4,20 +4,17 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      =  env("DATABASE_URL")
 }
 
 model User {
   id        Int     @default(autoincrement()) @id
   email     String  @unique
-  firstName String?
-  lastName  String?
+  firstName String
+  lastName  String
   social    Json?
-  isAdmin   Boolean @default(false)
   // Relation fields
-  courses     CourseEnrollment[]
-  testResults TestResult[]       @relation(name: "results")
-  testsGraded TestResult[]       @relation(name: "graded")
+  meetings     MeetingRegistration[]
   tokens      Token[]
 }
 
@@ -25,7 +22,7 @@ model Token {
   id         Int       @default(autoincrement()) @id
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  type       TokenType
+  tokenType  TokenType       
   emailToken String?   @unique // Only used for short lived email tokens
   valid      Boolean   @default(true)
   expiration DateTime
@@ -34,49 +31,41 @@ model Token {
   userId Int
 }
 
-model Course {
-  id            Int     @default(autoincrement()) @id
-  name          String
-  courseDetails String?
-  // Relation fields
-  members CourseEnrollment[]
-  tests   Test[]
+model Meeting {
+    id            Int     @default(autoincrement()) @id
+    theme          String
+    title          String
+    meetingDetails String
+    hostId      Int
+    // Relation fields
+    User User @relation(fields: [hostId],references:[id])
+    participants MeetingRegistration[]
 }
 
-model CourseEnrollment {
+
+model MeetingRegistration {
   createdAt DateTime @default(now())
-  role      UserRole
   // Relation Fields
   userId   Int
-  courseId Int
+  meetingId Int
   user     User   @relation(fields: [userId], references: [id])
-  course   Course @relation(fields: [courseId], references: [id])
-  @@id([userId, courseId])
-  @@index([userId, role])
+  Meeting   Meeting @relation(fields: [meetingId], references: [id])
+  @@id([userId, meetingId])
+  @@index([userId ])
 }
 
-model Test {
-  id        Int      @default(autoincrement()) @id
-  updatedAt DateTime @updatedAt
-  name      String
-  date      DateTime
-  // Relation Fields
-  courseId    Int
-  course      Course       @relation(fields: [courseId], references: [id])
-  testResults TestResult[]
+model MeetingCredential {
+  id        Int     @default(autoincrement()) @id
+  meetingEntryId String 
+  meetingPwd String
+  meetingId Int
+  meetingRoomId Int
+  Meeting Meeting @relation(fields:[meetingId] , references:[id])
+  MeetingRoom MeetingRoom @relation(fields:[meetingRoomId], references:[id])
 }
 
-model TestResult {
-  id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  result    Int // Percentage precise to one decimal point represented as `result * 10^-1`
-  // Relation Fields
-  studentId Int
-  student   User @relation(name: "results", fields: [studentId], references: [id])
-  graderId  Int
-  gradedBy  User @relation(name: "graded", fields: [graderId], references: [id])
-  testId    Int
-  test      Test @relation(fields: [testId], references: [id])
+model MeetingRoom {
+  id Int @default(autoincrement()) @id
 }
 
 enum UserRole {
