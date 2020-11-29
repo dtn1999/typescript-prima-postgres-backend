@@ -10,6 +10,7 @@
     "start": "npm run build && node build/index.js",
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
+    "migrate:up":"npx prisma db push --preview-feature --force",
     "test": "jest",
     "test:dev": "jest --watchAll"
   },

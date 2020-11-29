@@ -1,4 +1,4 @@
-[![building-test](https://github.com/dtn1999/typescript-prima-postgres-backend/workflows/building-test/badge.svg)](https://github.com/dtn1999/typescript-prima-postgres-backend/actions)
+[![t-zoom](https://github.com/dtn1999/typescript-prima-postgres-backend/workflows/t-zoom/badge.svg)](https://github.com/dtn1999/typescript-prima-postgres-backend/actions)
 ![html5 and css3 image](How_to_Become_a_Back_End_Developer.jpg)
 
 # BACKEND WITH TYPESCRIPT PRISMA AND POSTGRES
