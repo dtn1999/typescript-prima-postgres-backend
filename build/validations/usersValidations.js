@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserIdParamSchema = exports.createUserPayloadSchema = void 0;
-var joi_1 = __importDefault(require("@hapi/joi"));
-var createUserPayloadSchema = joi_1.default.object().keys({
+const joi_1 = __importDefault(require("@hapi/joi"));
+const createUserPayloadSchema = joi_1.default.object().keys({
     lastName: joi_1.default.string().required(),
     firstName: joi_1.default.string().required(),
     email: joi_1.default.string().email().required(),
@@ -18,7 +18,8 @@ var createUserPayloadSchema = joi_1.default.object().keys({
     }).optional(),
 });
 exports.createUserPayloadSchema = createUserPayloadSchema;
-var UserIdParamSchema = joi_1.default.object({
+const UserIdParamSchema = joi_1.default.object({
     userId: joi_1.default.string().pattern(/^\d+$/),
 });
 exports.UserIdParamSchema = UserIdParamSchema;
+//# sourceMappingURL=usersValidations.js.map

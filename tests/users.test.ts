@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import Hapi from '@hapi/hapi';
-import { createServer } from '../server';
+import { createServer } from '../src/server';
 
 describe('POST /api/users - create user', () => {
   // eslint-disable-next-line no-unused-vars

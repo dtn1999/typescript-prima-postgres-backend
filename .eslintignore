@@ -1,0 +1,6 @@
+# ignore linting node_modules
+**node_modules
+
+# ignore linting build
+
+**build

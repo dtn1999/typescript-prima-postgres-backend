@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.prismaPlugin = exports.usersPlugin = exports.apiStatusPlugin = void 0;
-var api_status_1 = __importDefault(require("./api-status"));
+const api_status_1 = __importDefault(require("./api-status"));
 exports.apiStatusPlugin = api_status_1.default;
-var user_1 = __importDefault(require("./user"));
+const user_1 = __importDefault(require("./user"));
 exports.usersPlugin = user_1.default;
-var prisma_1 = __importDefault(require("./prisma"));
+const prisma_1 = __importDefault(require("./prisma"));
 exports.prismaPlugin = prisma_1.default;
+//# sourceMappingURL=index.js.map

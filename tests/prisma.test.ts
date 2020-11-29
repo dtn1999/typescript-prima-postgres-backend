@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { PrismaClient } from '@prisma/client';
-import { TMeeting } from '../models/meeting';
-import { TUser } from '../models/user';
+import { TMeeting } from '../src/models/meeting';
+import { TUser } from '../src/models/user';
 
 describe('test prisma', () => {
   const prisma = new PrismaClient();

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var controllers_1 = require("../controllers");
-var usersPlugin = {
+const controllers_1 = require("../controllers");
+const usersPlugin = {
     name: 'app/users',
     dependencies: ['app/prisma'],
-    register: function (server) {
+    register: (server) => {
         server.route([
             // Post: create user route
             {
@@ -35,3 +35,4 @@ var usersPlugin = {
     },
 };
 exports.default = usersPlugin;
+//# sourceMappingURL=user.js.map
