@@ -57,25 +57,39 @@ describe('test prisma', () => {
       data: {
         ...meeting,
         User: { connect: { id: userId } },
+        MeetingCredential: {
+          create: {
+            meetingEntryId: 'adasdas',
+            meetingPwd: 'sdasdasda',
+            MeetingRoom: {
+              create: {
+                open: false,
+                User: {
+                  connect: { id: userId },
+                },
+              },
+            },
+          },
+        },
       },
     });
     console.log(createMeeting);
-    meetingId = createMeeting.id;
+    //  meetingId = createMeeting.id;
     expect(createMeeting).toBeTruthy();
   });
+  // TODO Implement after implementing test for auth
+  // test('get a meeting: dont work', async () => {
+  //   const dbMeeting = await prisma.meeting.findUnique({
+  //     where: { id: -4 },
+  //   });
+  //   expect(dbMeeting).toBeFalsy();
+  // });
 
-  test('get a meeting: dont work', async () => {
-    const dbMeeting = await prisma.meeting.findUnique({
-      where: { id: -4 },
-    });
-    expect(dbMeeting).toBeFalsy();
-  });
-
-  test('get a meeting: work', async () => {
-    console.log(meetingId);
-    const dbMeeting = await prisma.meeting.findUnique({
-      where: { id: meetingId },
-    });
-    expect(dbMeeting).toBeTruthy();
-  });
+  // test('get a meeting: work', async () => {
+  //   console.log(meetingId);
+  //   const dbMeeting = await prisma.meeting.findUnique({
+  //     where: { id: meetingId },
+  //   });
+  //   expect(dbMeeting).toBeTruthy();
+  // });
 });
