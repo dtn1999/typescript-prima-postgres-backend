@@ -8,6 +8,9 @@ const apiStatusPlugin:Hapi.Plugin<undefined> = {
     server.route({
       method: 'GET',
       path: '/status',
+      options: {
+        auth: false,
+      },
       handler: (request:Hapi.Request, h:Hapi.ResponseToolkit) => h.response({ up: true }).code(200),
     });
   },

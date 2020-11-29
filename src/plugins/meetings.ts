@@ -1,5 +1,6 @@
 import Hapi from '@hapi/hapi';
 import { meetingsController } from '../controllers';
+import { API_AUTH_STRATEGEY } from '../models/auth';
 
 const meetingsPlugin:Hapi.Plugin<undefined> = {
   name: 'app/meetings',
@@ -11,6 +12,12 @@ const meetingsPlugin:Hapi.Plugin<undefined> = {
       {
         method: 'POST',
         path: '/meetings',
+        options: {
+          auth: {
+            mode: 'required',
+            strategy: API_AUTH_STRATEGEY,
+          },
+        },
         handler: meetingsController.createMeetingHandler,
       },
     ]);

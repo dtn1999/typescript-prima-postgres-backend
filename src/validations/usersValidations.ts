@@ -2,8 +2,8 @@ import Joi from '@hapi/joi';
 import { TUser } from '../models';
 
 const createUserPayloadSchema = Joi.object<TUser>().keys({
-  lastName: Joi.string().required(),
-  firstName: Joi.string().required(),
+  lastName: Joi.string(),
+  firstName: Joi.string(),
   email: Joi.string().email().required(),
   social: Joi.object({
     facebook: Joi.string().optional(),

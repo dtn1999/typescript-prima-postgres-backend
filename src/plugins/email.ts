@@ -26,7 +26,7 @@ export default emailPlugin;
 async function sendEmailToken(email:string, emailToken:string):Promise<void> {
   const msg = {
     to: email,
-    from: 'danylsngongang@gamil.com',
+    from: 'danylsngongang@hotmail.com',
     subject: 'Login token for the T-Zoom API',
     text: `The Login token for the T-Zoom Text Api is: ${emailToken}`,
   };
