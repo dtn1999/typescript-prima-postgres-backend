@@ -2,7 +2,7 @@
 import Hapi from '@hapi/hapi';
 import { createServer } from '../src/server';
 
-describe('POST /api/users - create user', () => {
+describe('/api/users - create user', () => {
   // eslint-disable-next-line no-unused-vars
   let server:Hapi.Server;
 
@@ -11,6 +11,9 @@ describe('POST /api/users - create user', () => {
   });
 
   afterAll(async () => {
+    // await server.app.prisma.token.deleteMany({});
+    // await server.app.prisma.meeting.deleteMany({});
+    // await server.app.prisma.user.deleteMany({});
     await server.stop();
   });
 
@@ -27,7 +30,7 @@ describe('POST /api/users - create user', () => {
     },
   };
 
-  const badUser = {
+  const otherUser = {
     email: '',
     firstName: 'doe',
     social: {
@@ -57,19 +60,17 @@ describe('POST /api/users - create user', () => {
    *  failled because bad user payload
    */
 
-  test('POST /api/users : failled because of bad payload ', async () => {
-    badUser.email = `john${Date.now().toString()}@email.com`;
+  test('POST /api/users  ', async () => {
+    otherUser.email = `john${Date.now().toString()}@email.com`;
 
     const response = await server.inject({
       method: 'POST',
       url: '/api/users',
       payload: {
-        ...badUser,
+        ...otherUser,
       },
     });
-    expect(response.statusCode).toEqual(400);
-    const responsePayload = JSON.parse(response.payload);
-    expect(responsePayload.error).toBeTruthy();
+    expect(response.statusCode).toEqual(201);
   });
 
   /**
@@ -93,15 +94,15 @@ describe('POST /api/users - create user', () => {
     expect(responsePayload.error).toBeTruthy();
   });
 
-  test('get all the user', async () => {
+  test('get all the user: forbidden', async () => {
     const response = await server.inject({
       method: 'GET',
       url: '/api/users',
     });
 
-    expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toEqual(401);
     const responsePayload = JSON.parse(response.payload);
-    expect(responsePayload.users).toBeTruthy();
+    expect(responsePayload.users).toBeFalsy();
   });
 
   test('get  user with a wrong id: failled bad id', async () => {

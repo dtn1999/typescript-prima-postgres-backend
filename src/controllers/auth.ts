@@ -38,12 +38,15 @@ export default {
             },
           },
         },
+        include: {
+          user: true,
+        },
       });
 
       // TODO remove todo after
       console.log(createdToken);
       await sendEmailToken(payload.email, emailToken);
-      return h.response().code(200);
+      return h.response({ token: createdToken, user: createdToken.user }).code(200);
     } catch (error) {
       console.error(error);
       return Boom.badImplementation(error.message);

@@ -28,14 +28,17 @@ describe('test prisma', () => {
     meetingDetails: 'The meeting is to talk about implemetation of web server with hapi and typescript',
   };
   beforeAll(async () => {
-    await prisma.token.deleteMany({});
-    await prisma.meeting.deleteMany({});
-    await prisma.user.deleteMany({});
+    // await prisma.token.deleteMany({});
+    // await prisma.meeting.deleteMany({});
+    // await prisma.user.deleteMany({});
 
     await prisma.$connect();
   });
 
   afterAll(async () => {
+    // await prisma.token.deleteMany({});
+    // await prisma.meeting.deleteMany({});
+    // await prisma.user.deleteMany({});
     await prisma.$disconnect();
   });
 
