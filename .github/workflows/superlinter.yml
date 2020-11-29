@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     # prisma enviroment variables
-    env: postgresql://nnoxflfmtenoyl:98f6674df5e52d0bf7dbe8a8286c9af1c0a04d7c2dd71d5041eb322398e4b462@ec2-54-170-123-247.eu-west-1.compute.amazonaws.com:5432/d6079umsufped9
+    env: 
+      DATABASE_URL: postgresql://nnoxflfmtenoyl:98f6674df5e52d0bf7dbe8a8286c9af1c0a04d7c2dd71d5041eb322398e4b462@ec2-54-170-123-247.eu-west-1.compute.amazonaws.com:5432/d6079umsufped9
 
     strategy:
       matrix:
