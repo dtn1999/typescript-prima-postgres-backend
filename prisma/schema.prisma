@@ -36,7 +36,7 @@ model Meeting {
     theme          String
     title          String
     meetingDetails String
-    hostId      Int
+    hostId      Int @unique
     // Relation fields
     meetingCredentialId Int
     MeetingCredential MeetingCredential @relation(fields: [meetingCredentialId],references:[id])

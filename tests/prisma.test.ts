@@ -7,7 +7,7 @@ describe('test prisma', () => {
   const prisma = new PrismaClient();
   //
   let userId: number;
-  let meetingId:number;
+  // let meetingId:number;
 
   //
   const user:TUser = {
@@ -59,7 +59,7 @@ describe('test prisma', () => {
         User: { connect: { id: userId } },
         MeetingCredential: {
           create: {
-            meetingEntryId: 'adasdas',
+            meetingEntryId: `asdasdas${Math.random().toString()}`,
             meetingPwd: 'sdasdasda',
             MeetingRoom: {
               create: {
