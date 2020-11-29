@@ -1,4 +1,4 @@
-![example workflow name](https://github.com/actions/typescript-prima-postgres-backend/workflows/Node.js%CI/badge.svg)
+[![building-test](https://github.com/dtn1999/typescript-prima-postgres-backend/workflows/building-test/badge.svg)](https://github.com/dtn1999/typescript-prima-postgres-backend/actions)
 ![html5 and css3 image](How_to_Become_a_Back_End_Developer.jpg)
 
 # BACKEND WITH TYPESCRIPT PRISMA AND POSTGRES
