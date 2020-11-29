@@ -17,19 +17,34 @@ describe('POST /api/users - create user', () => {
   let userId: number;
   let lastEmail: string;
 
-  test('POST /api/users : Create user', async () => {
-    lastEmail = `john${Date.now().toString()}@email.com`;
+  // const user
+  const goodUser = {
+    email: '',
+    lastName: 'john',
+    firstName: 'doe',
+    social: {
+      facebook: 'danyls',
+    },
+  };
 
+  const badUser = {
+    email: '',
+    firstName: 'doe',
+    social: {
+      facebook: 'danyls',
+    },
+  };
+  /**
+   * succeed
+   */
+  test('endpoint /api/users : Create user', async () => {
+    lastEmail = `john${Date.now().toString()}@email.com`;
+    goodUser.email = lastEmail;
     const response = await server.inject({
       method: 'POST',
       url: '/api/users',
       payload: {
-        email: lastEmail,
-        lastName: 'john',
-        firstName: 'doe',
-        social: {
-          facebook: 'danyls',
-        },
+        ...goodUser,
       },
     });
     expect(response.statusCode).toEqual(201);
@@ -37,6 +52,29 @@ describe('POST /api/users - create user', () => {
     userId = responsePayload.user.id;
     expect(userId).toBeTruthy();
   });
+
+  /**
+   *  failled because bad user payload
+   */
+
+  test('POST /api/users : failled because of bad payload ', async () => {
+    badUser.email = `john${Date.now().toString()}@email.com`;
+
+    const response = await server.inject({
+      method: 'POST',
+      url: '/api/users',
+      payload: {
+        ...badUser,
+      },
+    });
+    expect(response.statusCode).toEqual(400);
+    const responsePayload = JSON.parse(response.payload);
+    expect(responsePayload.error).toBeTruthy();
+  });
+
+  /**
+   * failled because of email violation constraints
+   */
   test('POST /api/users : failled because of email violation constraint', async () => {
     const response = await server.inject({
       method: 'POST',
@@ -50,9 +88,44 @@ describe('POST /api/users - create user', () => {
         },
       },
     });
-    expect(response.statusCode).toEqual(500);
+    expect(response.statusCode).toEqual(422);
     const responsePayload = JSON.parse(response.payload);
     expect(responsePayload.error).toBeTruthy();
+  });
+
+  test('get all the user', async () => {
+    const response = await server.inject({
+      method: 'GET',
+      url: '/api/users',
+    });
+
+    expect(response.statusCode).toEqual(200);
+    const responsePayload = JSON.parse(response.payload);
+    expect(responsePayload.users).toBeTruthy();
+  });
+
+  test('get  user with a wrong id: failled bad id', async () => {
+    const response = await server.inject({
+      method: 'GET',
+      url: `/api/users/${-userId}`,
+    });
+
+    expect(response.statusCode).toEqual(400);
+    const responsePayload = JSON.parse(response.payload);
+    expect(responsePayload.error).toBeTruthy();
+    expect(responsePayload.user).toBeFalsy();
+  });
+
+  test('get  user with a good id', async () => {
+    const response = await server.inject({
+      method: 'GET',
+      url: `/api/users/${userId}`,
+    });
+
+    expect(response.statusCode).toEqual(200);
+    const responsePayload = JSON.parse(response.payload);
+    expect(responsePayload.user).toBeTruthy();
+    expect(responsePayload.error).toBeFalsy();
   });
 
   test('delete user', async () => {
@@ -62,5 +135,23 @@ describe('POST /api/users - create user', () => {
     });
 
     expect(response.statusCode).toEqual(204);
+  });
+
+  test('delete user, but passing wrong parameter', async () => {
+    const response = await server.inject({
+      method: 'DELETE',
+      url: `/api/users/${'userId'}`,
+    });
+
+    expect(response.statusCode).toEqual(400);
+  });
+
+  test('delete user that doesn t exist on the server', async () => {
+    const response = await server.inject({
+      method: 'DELETE',
+      url: `/api/users/${userId}`,
+    });
+
+    expect(response.statusCode).toEqual(500);
   });
 });

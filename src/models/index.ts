@@ -1,5 +1,5 @@
-import TMeeting from './meeting';
-import TUser from './user';
+import { TMeeting } from './meeting';
+import { TUser } from './user';
 
 export {
   TMeeting,

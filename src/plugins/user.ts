@@ -10,15 +10,28 @@ const usersPlugin:Hapi.Plugin<undefined> = {
       {
         method: 'POST',
         path: '/users',
-        handler: sersContoller.createUserHandleru,
+        handler: usersContoller.createUserHandler,
       },
       // Get: get user by id route
-
+      {
+        method: 'GET',
+        path: '/users/{userId}',
+        handler: usersContoller.getUserByIdHandler,
+      },
       // Get: get all users route
-
+      {
+        method: 'GET',
+        path: '/users',
+        handler: usersContoller.getUserAllHandler,
+      },
       // Put: update existing user by id
 
       // Delete: delete existing user by id route
+      {
+        method: 'DELETE',
+        path: '/users/{userId}',
+        handler: usersContoller.deleteUserByIdHandler,
+      },
 
     ]);
   },

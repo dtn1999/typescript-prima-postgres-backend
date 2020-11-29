@@ -2,11 +2,18 @@
 import Hapi from '@hapi/hapi';
 import { createServer } from '../server';
 
-describe('Test if server starting', async () => {
-  const server = await createServer();
+describe('Test if server starting', () => {
+  let server:Hapi.Server;
+
+  beforeAll(async () => {
+    server = await createServer();
+  });
+
+  afterAll(async () => {
+    await server.stop();
+  });
 
   test('createServer: Should return instance of server', async () => {
-    const isInstanceOfServer = server instanceof Hapi.Server;
-    expect(isInstanceOfServer).toEqual(true);
+    expect(server).toBeTruthy();
   });
 });

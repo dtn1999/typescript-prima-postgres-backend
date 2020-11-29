@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi';
 import { TUser } from '../models';
 
-export default Joi.object<TUser>().keys({
+const createUserPayloadSchema = Joi.object<TUser>().keys({
   lastName: Joi.string().required(),
   firstName: Joi.string().required(),
   email: Joi.string().email().required(),
@@ -13,3 +13,7 @@ export default Joi.object<TUser>().keys({
     github: Joi.string().optional(),
   }).optional(),
 });
+const UserIdParamSchema = Joi.object({
+  userId: Joi.string().pattern(/^\d+$/),
+});
+export { createUserPayloadSchema, UserIdParamSchema };
