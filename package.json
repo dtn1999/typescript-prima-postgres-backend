@@ -1,4 +1,7 @@
 {
+  "engines" : { 
+    "node" : ">=8.0.0 <14.0.0" 
+  },
   "name": "typescript-prima-postgres-backend",
   "version": "1.0.0",
   "description": "\"Modern backend developpement with ts, postgre and prisma\"",
