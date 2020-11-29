@@ -68,7 +68,7 @@ $ npm start   # yarn start
 - [x] Authentication
 - [x] Authorization
 - [x] Github actions for (Texting : see badge above)
-- []  chatroom 
-- []  dicussion during chatroom
-- []  frontend web
-- []  frontend mobile
+- [ ]  chatroom 
+- [ ]  dicussion during chatroom
+- [ ]  frontend web
+- [ ]  frontend mobile
