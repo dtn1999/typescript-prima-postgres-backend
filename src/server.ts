@@ -1,5 +1,9 @@
 import Hapi from '@hapi/hapi';
-import { apiStatusPlugin, prismaPlugin, usersPlugin } from './plugins';
+import hapiAuthJWTPlugin from 'hapi-auth-jwt2';
+import {
+  apiStatusPlugin, prismaPlugin, usersPlugin, authPlugin,
+  emailPlugin,
+} from './plugins';
 
 export async function createServer():Promise<Hapi.Server> {
   console.log('Server is Starting ...');
@@ -8,6 +12,9 @@ export async function createServer():Promise<Hapi.Server> {
     host: process.env.HOST || 'localhost',
   });
   await server.register([
+    hapiAuthJWTPlugin,
+    authPlugin,
+    emailPlugin,
     apiStatusPlugin,
     prismaPlugin,
     usersPlugin,

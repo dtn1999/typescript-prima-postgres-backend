@@ -10,8 +10,8 @@ datasource db {
 model User {
   id        Int     @default(autoincrement()) @id
   email     String  @unique
-  firstName String
-  lastName  String
+  firstName String?
+  lastName  String?
   social    Json?
   // Relation fields
   meetings     MeetingRegistration[]
