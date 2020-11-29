@@ -1,8 +1,12 @@
 import Hapi from '@hapi/hapi';
 import hapiAuthJWTPlugin from 'hapi-auth-jwt2';
 import {
-  apiStatusPlugin, prismaPlugin, usersPlugin, authPlugin,
+  apiStatusPlugin,
+  prismaPlugin,
+  usersPlugin,
+  authPlugin,
   emailPlugin,
+  meetingsPlugin,
 } from './plugins';
 
 export async function createServer():Promise<Hapi.Server> {
@@ -18,6 +22,7 @@ export async function createServer():Promise<Hapi.Server> {
     apiStatusPlugin,
     prismaPlugin,
     usersPlugin,
+    meetingsPlugin,
   ], {
     routes: {
       prefix: '/api',

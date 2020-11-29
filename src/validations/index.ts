@@ -1,5 +1,9 @@
 import { createUserPayloadSchema, UserIdParamSchema } from './usersValidations';
-import { MeetingParamSchema, createMeetingPayloadSchema } from './meetingsValidations';
+import {
+  MeetingParamSchema,
+  createMeetingPayloadSchema,
+  UpdateMeetingPayloadSchema,
+} from './meetingsValidations';
 import {
   AuthenticateInputSchema,
   LoginInputSchema,
@@ -15,4 +19,5 @@ export {
   AuthenticateInputSchema,
   LoginInputSchema,
   apiTokenSchema,
+  UpdateMeetingPayloadSchema,
 };

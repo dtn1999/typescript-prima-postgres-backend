@@ -2,12 +2,18 @@
 import Boom from '@hapi/boom';
 import Hapi from '@hapi/hapi';
 import { TMeeting } from '../models';
-import { createMeetingPayloadSchema, MeetingParamSchema } from '../validations';
+import { TUpdateMeeting } from '../models/meeting';
+import {
+  createMeetingPayloadSchema,
+  MeetingParamSchema,
+  UpdateMeetingPayloadSchema,
+} from '../validations';
 
 export default {
   createMeetingHandler: async (request:Hapi.Request, h:Hapi.ResponseToolkit) => {
     const { prisma } = request.server.app;
     const payload = request.payload as TMeeting;
+    const hostId = request.auth.credentials.activeUser.id;
     const { errors, error } = createMeetingPayloadSchema.validate(payload);
 
     if (error || errors) {
@@ -19,7 +25,7 @@ export default {
         data: {
           ...payload,
           User: {
-            connect: { id: 1 },
+            connect: { id: hostId },
           },
         },
       });
@@ -55,7 +61,7 @@ export default {
   },
 
   /** get a meeting by id */
-  getMeetingById: async (
+  getMeetingByIdHandler: async (
     request:Hapi.Request,
     h:Hapi.ResponseToolkit,
   ) => {
@@ -69,10 +75,67 @@ export default {
 
     try {
       const meetingId = parseInt(params.meetingId, 10);
-      await prisma.meeting.delete({
+      const fetchedMeeting = await prisma.meeting.findUnique({
         where: { id: meetingId },
       });
-      return h.response().code(204);
+      return h.response({ meeting: fetchedMeeting }).code(200);
+    } catch (error) {
+      console.error(error);
+      return Boom.notFound('There is no meeting with the given id');
+    }
+  },
+
+  /** get all meetings */
+  getAllMeetingsHandler: async (
+    request:Hapi.Request,
+    h:Hapi.ResponseToolkit,
+  ) => {
+    const { prisma } = request.server.app;
+    try {
+      const fetchedMeetings = await prisma.meeting.findMany({});
+      return h.response({ meetings: fetchedMeetings }).code(200);
+    } catch (error) {
+      console.error(error);
+      return Boom.badImplementation('error occured while trying to fetch all meetings');
+    }
+  },
+  /** zpdate meeting */
+  updateMeetingByIdHandler: async (
+    request:Hapi.Request,
+    h:Hapi.ResponseToolkit,
+  ) => {
+    const { prisma } = request.server.app;
+    const { params } = request;
+    const payload = request.payload as TUpdateMeeting;
+    const {
+      error: paramError,
+      errors: paramsErrors,
+    } = MeetingParamSchema.validate(params);
+
+    const {
+      error: payloadError,
+      errors: payloadErrors,
+    } = UpdateMeetingPayloadSchema.validate(payload);
+
+    if (paramError || paramsErrors || payloadError || payloadErrors) {
+      console.log(payloadError, payloadErrors, paramError, paramsErrors);
+      return Boom.badRequest('Make sure the parameter your past with your request are correct');
+    }
+
+    try {
+      const meetingId = parseInt(params.meetingId, 10);
+
+      const { title, theme, meetingDetails } = payload;
+      const updatedMeeting = await prisma.meeting.update({
+        where: { id: meetingId },
+        data: {
+          title,
+          theme,
+          meetingDetails,
+        },
+      });
+      console.log(updatedMeeting);
+      return h.response({ meeting: updatedMeeting }).code(200);
     } catch (error) {
       console.error(error);
       return Boom.notFound('There is no meeting with the given id');

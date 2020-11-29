@@ -110,22 +110,20 @@ describe('POST /api/users - create user', () => {
       url: `/api/users/${-userId}`,
     });
 
-    expect(response.statusCode).toEqual(400);
+    expect(response.statusCode).toEqual(401);
     const responsePayload = JSON.parse(response.payload);
     expect(responsePayload.error).toBeTruthy();
-    expect(responsePayload.user).toBeFalsy();
   });
 
-  test('get  user with a good id', async () => {
+  test('get  user with a good id but unautorized', async () => {
     const response = await server.inject({
       method: 'GET',
       url: `/api/users/${userId}`,
     });
 
-    expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toEqual(401);
     const responsePayload = JSON.parse(response.payload);
-    expect(responsePayload.user).toBeTruthy();
-    expect(responsePayload.error).toBeFalsy();
+    expect(responsePayload.user).toBeFalsy();
   });
 
   test('delete user', async () => {
@@ -134,7 +132,7 @@ describe('POST /api/users - create user', () => {
       url: `/api/users/${userId}`,
     });
 
-    expect(response.statusCode).toEqual(204);
+    expect(response.statusCode).toEqual(401);
   });
 
   test('delete user, but passing wrong parameter', async () => {
@@ -143,7 +141,7 @@ describe('POST /api/users - create user', () => {
       url: `/api/users/${'userId'}`,
     });
 
-    expect(response.statusCode).toEqual(400);
+    expect(response.statusCode).toEqual(401);
   });
 
   test('delete user that doesn t exist on the server', async () => {
@@ -152,6 +150,6 @@ describe('POST /api/users - create user', () => {
       url: `/api/users/${userId}`,
     });
 
-    expect(response.statusCode).toEqual(500);
+    expect(response.statusCode).toEqual(401);
   });
 });

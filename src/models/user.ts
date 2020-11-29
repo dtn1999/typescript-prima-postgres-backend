@@ -9,3 +9,7 @@ export type TUser= {
         tiktok?: string
     }
 }
+
+export type DBUser = {
+    id: number
+} & TUser

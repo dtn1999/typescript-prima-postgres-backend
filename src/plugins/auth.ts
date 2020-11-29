@@ -7,6 +7,18 @@ import {
 } from '../models/auth';
 import { authController } from '../controllers';
 import { validateAPIToken } from '../auth';
+import { DBUser } from '../models/user';
+import { DBMeeting } from '../models/meeting';
+
+declare module '@hapi/hapi'{
+  // eslint-disable-next-line no-unused-vars
+  interface AuthCredentials {
+    tokenId: number,
+    activeUser: DBUser,
+    hostOf: DBMeeting[],
+    guestOf: DBMeeting[]
+  }
+}
 
 const authPlugin:Hapi.Plugin<undefined> = {
   name: 'app/auth',

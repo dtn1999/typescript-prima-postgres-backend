@@ -3,6 +3,7 @@ import usersPlugin from './user';
 import prismaPlugin from './prisma';
 import authPlugin from './auth';
 import emailPlugin from './email';
+import meetingsPlugin from './meetings';
 
 export {
   apiStatusPlugin,
@@ -10,4 +11,5 @@ export {
   prismaPlugin,
   authPlugin,
   emailPlugin,
+  meetingsPlugin,
 };

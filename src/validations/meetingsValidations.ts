@@ -6,7 +6,15 @@ const createMeetingPayloadSchema = Joi.object<TMeeting>().keys({
   title: Joi.string().required(),
   meetingDetails: Joi.string().required(),
 });
-const MeetingParamSchema = Joi.object({
-  hostId: Joi.string().pattern(/^\d+$/),
+
+const UpdateMeetingPayloadSchema = Joi.object<TMeeting>().keys({
+  theme: Joi.string().optional(),
+  title: Joi.string().optional(),
+  meetingDetails: Joi.string().optional(),
 });
-export { createMeetingPayloadSchema, MeetingParamSchema };
+
+const MeetingParamSchema = Joi.object({
+  meetingId: Joi.string().pattern(/^\d+$/),
+});
+
+export { createMeetingPayloadSchema, MeetingParamSchema, UpdateMeetingPayloadSchema };
