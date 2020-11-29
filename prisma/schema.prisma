@@ -38,6 +38,8 @@ model Meeting {
     meetingDetails String
     hostId      Int
     // Relation fields
+    meetingCredentialId Int
+    MeetingCredential MeetingCredential @relation(fields: [meetingCredentialId],references:[id])
     User User @relation(fields: [hostId],references:[id])
     participants MeetingRegistration[]
 }
@@ -56,21 +58,22 @@ model MeetingRegistration {
 
 model MeetingCredential {
   id        Int     @default(autoincrement()) @id
-  meetingEntryId String 
+  meetingEntryId String @unique
   meetingPwd String
-  meetingId Int
   meetingRoomId Int
-  Meeting Meeting @relation(fields:[meetingId] , references:[id])
-  MeetingRoom MeetingRoom @relation(fields:[meetingRoomId], references:[id])
+  MeetingRoom MeetingRoom @relation(fields: [meetingRoomId],references:[id])
 }
 
 model MeetingRoom {
   id Int @default(autoincrement()) @id
+  hostId Int
+  open Boolean @default(false)
+  User User @relation(fields: [hostId],references:[id])
 }
 
 enum UserRole {
-  STUDENT
-  TEACHER
+  HOST
+  PARTICIPANT
 }
 
 enum TokenType {

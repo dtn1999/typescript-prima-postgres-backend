@@ -38,22 +38,18 @@ export default {
             },
           },
         },
-        include: {
-          user: true,
-        },
       });
 
       // TODO remove todo after
       console.log(createdToken);
       await sendEmailToken(payload.email, emailToken);
-      return h.response({ token: createdToken, user: createdToken.user }).code(200);
+      return h.response({ token: createdToken }).code(200);
     } catch (error) {
       console.error(error);
       return Boom.badImplementation(error.message);
     }
   },
 
-  // eslint-disable-next-line consistent-return
   authenticateHandler: async (request:Hapi.Request, h:Hapi.ResponseToolkit) => {
     const { prisma } = request.server.app;
     const payload = request.payload as AuthenticateInput;
@@ -120,6 +116,7 @@ export default {
     } catch (error) {
       return Boom.badImplementation(error.message);
     }
+    return Boom.notFound('No user found with the given authentication details');
   },
 
 };

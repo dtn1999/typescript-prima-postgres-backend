@@ -7,6 +7,7 @@ import {
   authPlugin,
   emailPlugin,
   meetingsPlugin,
+  meetingRegistrationPlugin,
 } from './plugins';
 
 export async function createServer():Promise<Hapi.Server> {
@@ -23,6 +24,7 @@ export async function createServer():Promise<Hapi.Server> {
     prismaPlugin,
     usersPlugin,
     meetingsPlugin,
+    meetingRegistrationPlugin,
   ], {
     routes: {
       prefix: '/api',

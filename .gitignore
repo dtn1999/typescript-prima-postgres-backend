@@ -5,4 +5,5 @@
 
 # ignore build
 
-**build/
+**build/**
+**bootstrap

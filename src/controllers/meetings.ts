@@ -1,6 +1,8 @@
 /* eslint-disable no-shadow */
 import Boom from '@hapi/boom';
 import Hapi from '@hapi/hapi';
+import generator from 'generate-password';
+import { generateEmailToken } from '../auth';
 import { TMeeting } from '../models';
 import { TUpdateMeeting } from '../models/meeting';
 import {
@@ -21,15 +23,56 @@ export default {
     }
 
     try {
+      const meetingEntryId = generateEmailToken();
+      const meetingPwd = generator.generate({
+        length: 10,
+        numbers: true,
+      });
       const createdMeeting = await prisma.meeting.create({
         data: {
           ...payload,
           User: {
             connect: { id: hostId },
           },
+          // create meeting credantials and meeting room
+          MeetingCredential: {
+            create: {
+              meetingEntryId,
+              meetingPwd,
+              MeetingRoom: {
+                create: {
+                  open: false,
+                  User: {
+                    connect: { id: hostId },
+                  },
+                },
+              },
+            },
+          },
+        },
+        // include additional information in the response field
+        include: {
+          MeetingCredential: {
+            select: {
+              meetingEntryId: true,
+              meetingPwd: true,
+              MeetingRoom: {
+                select: {
+                  id: true,
+                  open: true,
+                  User: {
+                    select: {
+                      email: true,
+                      social: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       });
-      return h.response({ meeting: createdMeeting }).code(201);
+      return h.response({ meetingRoomInfo: createdMeeting }).code(201);
     } catch (error) {
       console.error(error);
       return Boom.badImplementation('error occured con the server');
